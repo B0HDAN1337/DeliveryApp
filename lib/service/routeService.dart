@@ -4,10 +4,10 @@ import '../models/point.dart';
 import 'package:latlong2/latlong.dart';
 
 class RouteService {
-  final String baseUrl = 'http://127.0.0.1:3000';
+  final String baseUrl = 'http://0.0.0.0:8080';
 
   Future<List<Point>> fetchPoints() async {
-    final res = await http.get(Uri.parse('$baseUrl/points'));
+    final res = await http.get(Uri.parse('$baseUrl/api/Route'));
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body) as List;
       return data.map((e) => Point.fromJson(e)).toList();
