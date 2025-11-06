@@ -6,12 +6,14 @@ class MapWidget extends StatelessWidget {
   final MapController mapController;
   final List<LatLng> routePoints;
   final List<Marker> markers;
+  final LatLng? currentLocation;
 
   const MapWidget({
     super.key,
     required this.mapController,
     required this.routePoints,
     required this.markers,
+    required this.currentLocation,
   });
 
   @override
@@ -22,10 +24,23 @@ class MapWidget extends StatelessWidget {
       color: Colors.blue,
     );
 
+    final currentMarker = currentLocation != null
+        ? Marker(
+            point: currentLocation!,
+            width: 60,
+            height: 60,
+            child: const Icon(
+              Icons.my_location,
+              color: Colors.blueAccent,
+              size: 32,
+            ),
+          )
+        : null;
+
     return FlutterMap(
       mapController: mapController,
       options: MapOptions(
-        initialCenter: LatLng(49.0, 19.0),
+        initialCenter: LatLng(49.78559, 19.057272),
         initialZoom: 15.0,
       ),
       children: [
@@ -35,6 +50,8 @@ class MapWidget extends StatelessWidget {
         ),
         if (routePoints.isNotEmpty) PolylineLayer(polylines: [polyline]),
         MarkerLayer(markers: markers),
+
+        if (currentMarker != null) MarkerLayer(markers: [currentMarker])
       ],
     );
   }

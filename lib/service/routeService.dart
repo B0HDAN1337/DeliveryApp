@@ -15,24 +15,4 @@ class RouteService {
       throw Exception('Failed to load points');
     }
   }
-
-  Future<List<LatLng>> fetchRoute(List<Point> points) async {
-    final body = jsonEncode({
-      'waypoints': points.map((p) => p.toJson()).toList(),
-    });
-
-    final res = await http.post(
-      Uri.parse('$baseUrl/route'),
-      headers: {'Content-Type': 'application/json'},
-      body: body,
-    );
-
-    if (res.statusCode == 200) {
-      final data = jsonDecode(res.body);
-      final coords = data['geometry']['coordinates'] as List;
-      return coords.map((c) => LatLng(c[1], c[0])).toList();
-    } else {
-      throw Exception('Failed to load route');
-    }
-  }
 }

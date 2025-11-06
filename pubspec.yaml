@@ -12,6 +12,7 @@ dependencies:
   flutter_map: ^8.2.2
   google_maps_flutter: ^2.13.1
   url_launcher: ^6.3.2
+  geolocator: ^10.1.0
 
 dev_dependencies:
   flutter_test:
