@@ -37,7 +37,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _startLocationTracking();
-    _loadData();
   }
 
   @override
@@ -47,12 +46,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _loadData() async {
-    try {
+   try {
+      setState(() => loading = true);
       final fetchedPoints = await api.fetchPoints();
       setState(() => points = fetchedPoints);
       await _fetchRoute();
     } catch (e) {
-      print('Error: $e');
+      print('Error loading points: $e');
+    } finally {
+      setState(() => loading = false);
     }
   }
 
@@ -223,7 +225,7 @@ void _maybeUpdateRoute() {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton.extended(
-            onPressed: _fetchRoute, 
+            onPressed: _loadData, 
             label: Text(loading ? 'Loading...' : 'Show Route'),
             icon: const Icon(Icons.alt_route),
             ),
