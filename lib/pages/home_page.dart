@@ -65,9 +65,20 @@ class _HomePageState extends State<HomePage> {
   setState(() => loading = true);
 
   try {
+    final activePoints = points.where((p) => !p.visited).toList();
+
+    if (activePoints.isEmpty) {
+      print('All points visited');
+      setState(() {
+        routePoints.clear();
+        loading = false;
+      });
+      return;
+    }
+
     final coords = [
       '${currentLocation!.longitude},${currentLocation!.latitude}',
-      ...points.map((p) => '${p.lon},${p.lat}')
+      ...activePoints.map((p) => '${p.lon},${p.lat}')
     ].join(';');
 
     final url =
@@ -125,7 +136,7 @@ Future<void> _startLocationTracking() async {
           currentLocation = LatLng(pos.latitude, pos.longitude);
         });
 
-        mapController.move(currentLocation!, 15);
+
         _checkProximity();
         _maybeUpdateRoute();
       });
@@ -159,22 +170,25 @@ void _maybeUpdateRoute() {
     if (_currentTargetIndex == 0) {
       setState(() {
         deliveryStatus = 'Taked car';
+        points[_currentTargetIndex].visited = true;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Taked car')),
+        SnackBar(content: Text(deliveryStatus)),
       );
     } else if (_currentTargetIndex == 1) {
       setState(() {
         deliveryStatus = 'Delivery pack collected';
+        points[_currentTargetIndex].visited = true;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Delivery pack collected')));
+        SnackBar(content: Text(deliveryStatus)));
     } else if(_currentTargetIndex == 2) {
       setState(() {
         deliveryStatus = "Pack delivered";
+        points[_currentTargetIndex].visited = true;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Pack delivered'))
+        SnackBar(content: Text(deliveryStatus))
       );
     }
 
