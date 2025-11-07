@@ -156,6 +156,8 @@ void _maybeUpdateRoute() {
     }
   }
 
+  bool isDialogOpen = false;
+
   void _checkProximity() async {
   if (currentLocation == null || points.isEmpty) return;
 
@@ -168,39 +170,62 @@ void _maybeUpdateRoute() {
     targetPoint.lon,
   );
 
-  if (distance < 30) {
+  if (distance < 30 && !targetPoint.visited) {
+    isDialogOpen = true;
+    String actionText = '';
+    if (_currentTargetIndex == 0) actionText = 'Confirm vehicle pickup?';
+    else if (_currentTargetIndex == 1) actionText = 'Confirm parcel collected?';
+    else if (_currentTargetIndex == 2) actionText = 'Confirm parcel delivered?';
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirmation'),
+        content: Text(actionText),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              isDialogOpen = false;
+            },
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _confirmStep();
+            },
+            child: const Text('Confirm'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+void _confirmStep() {
+  setState(() {
+    points[_currentTargetIndex].visited = true;
+
     if (_currentTargetIndex == 0) {
-      setState(() {
-        deliveryStatus = 'Taked car';
-        points[_currentTargetIndex].visited = true;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(deliveryStatus)),
-      );
+      deliveryStatus = 'Vehicle accepted ';
     } else if (_currentTargetIndex == 1) {
-      setState(() {
-        deliveryStatus = 'Delivery pack collected';
-        points[_currentTargetIndex].visited = true;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(deliveryStatus)));
-    } else if(_currentTargetIndex == 2) {
-      setState(() {
-        deliveryStatus = "Pack delivered";
-        points[_currentTargetIndex].visited = true;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(deliveryStatus))
-      );
+      deliveryStatus = 'Pack collected ';
+    } else if (_currentTargetIndex == 2) {
+      deliveryStatus = 'Pack delivered';
     }
 
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(deliveryStatus)),
+    );
+
     if (_currentTargetIndex < points.length - 1) {
-      setState(() {
-        _currentTargetIndex++;
-      });
+      _currentTargetIndex++;
       _fetchRoute();
+    } else {
+      routePoints.clear();
     }
-  }
+  });
 }
 
 

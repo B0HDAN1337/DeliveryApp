@@ -1,6 +1,6 @@
+import 'package:delivery_app/pages/account_page.dart';
 import 'package:delivery_app/pages/home_page.dart';
 import 'package:delivery_app/pages/second_page.dart';
-import 'package:delivery_app/pages/third_page.dart';
 import 'package:flutter/material.dart';
 
 class Navigation extends StatefulWidget {
@@ -20,7 +20,7 @@ class _NavigationState extends State<Navigation> {
     final List<Widget> pages = const [
       HomePage(),
       SecondPage(),
-      ThirdPage(),
+      AccountPage(),
     ];
 
     return Scaffold(
@@ -43,8 +43,8 @@ class _NavigationState extends State<Navigation> {
             label: 'second',
           ),
           NavigationDestination(
-            icon: Badge(child: Icon(Icons.home)),
-            label: 'third',
+            icon: Badge(child: Icon(Icons.account_box)),
+            label: 'Account',
           ),
         ],
       ),

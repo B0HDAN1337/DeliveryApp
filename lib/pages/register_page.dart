@@ -1,3 +1,4 @@
+import 'package:delivery_app/service/registerService.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 
@@ -12,27 +13,35 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmController = TextEditingController();
+  final RegisterService _registerService = RegisterService();
   bool _loading = false;
 
   void _register() async {
-    if (_passwordController.text != _confirmController.text) {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+    final confirmPassword = _confirmController.text.trim();
+    if (password != confirmPassword) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Passwords do not match')),
       );
       return;
     }
 
-    setState(() => _loading = true);
+    final success = await _registerService.register(email, password);
 
-    setState(() => _loading = false);
-    ScaffoldMessenger.of(context).showSnackBar(
+   if (success) {
+      var pushReplacement = Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Registration successful')),
     );
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const LoginPage()),
-    );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid credentials')),
+      );
+    }
   }
 
   @override

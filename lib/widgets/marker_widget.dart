@@ -14,7 +14,7 @@ class MarkerWidget {
 
      if (index == 0) {
         // Car
-        icon = Icons.home;
+        icon = Icons.car_rental_rounded;
         color = point.visited ? Colors.grey : Colors.blue;
       } else if (index == 1) {
         // Collect pack
