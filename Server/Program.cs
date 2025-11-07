@@ -22,6 +22,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 // Controllers
 builder.Services.AddControllers();
 
+// HttpContextAccessor
+builder.Services.AddHttpContextAccessor();
+
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

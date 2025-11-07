@@ -3,6 +3,7 @@ import 'package:delivery_app/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'register_page.dart';
 import 'package:delivery_app/navigation.dart';
+import 'package:delivery_app/service/authService.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,9 +15,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
   bool _loading = false;
 
-  void _login() {
+  void _login() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -27,7 +29,10 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    if (email == "test@test.com" && password == "123456") {
+    final success = await _authService.login(email, password);
+
+
+    if (success) {
       var pushReplacement = Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Navigation()),
