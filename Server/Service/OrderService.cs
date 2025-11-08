@@ -26,16 +26,20 @@ namespace Server.Service
         {
             return await _repository.GetByIdAsync(id);
         }
-        public async Task<Order> CreateOrderAsync(OrderViewModel orderViewModel)
+        public async Task CreateOrderAsync(OrderViewModel orderViewModel)
         {
             var order = new Order
             {
-                OrderNumber = orderViewModel.OrderNumber,
-                CreatedAt = orderViewModel.CreatedAt
+                ClientId = orderViewModel.ClientId,
+                PickupLocation = orderViewModel.PickupLocation,
+                DropoffLocation = orderViewModel.DropoffLocation,
+                DeliveryStatus = orderViewModel.DeliveryStatus,
+                CreatedAt = DateTime.UtcNow
             };
-            return await _repository.CreateAsync(order);
+            
+            await _repository.CreateAsync(order);
         }
-        public async Task<bool> UploadOrderSignatureAsync(int orderId,  IFormFile signatureFile)
+        public async Task<bool> UploadOrderSignatureAsync(int orderId, IFormFile signatureFile)
         {
             var order = await _repository.GetByIdAsync(orderId);
             if (order == null) return false;
@@ -60,5 +64,23 @@ namespace Server.Service
 
             return true;
         }
+        
+        public async Task<bool> AssignCourierAsync(int orderId, int courierId)
+        {
+            var order = await _repository.GetByIdAsync(orderId);
+            if (order == null) return false;
+
+            order.CourierId = courierId;
+            order.DeliveryStatus = "accepted";
+            await _repository.UpdateAsync(orderId, order);
+            return true;
+        }
+
+        public async Task<IEnumerable<Order>> GetCourierOrdersAsync(int courierId)
+        {
+            var allOrders = await _repository.GetAllAsync();
+            return allOrders.Where(o => o.CourierId == courierId);
+        }
+
     }
 }

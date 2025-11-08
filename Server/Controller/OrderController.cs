@@ -68,5 +68,23 @@ namespace Server.Controller
 
             return Ok(new { message = "Signature uploaded successfully" });
         }
+
+        [HttpPost("{id}/assign")]
+        public async Task<IActionResult> AssignCourier(int id, int courierId)
+        {
+            var success = await _service.AssignCourierAsync(id, courierId);
+            if (success == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { message = "Courier assigned" });
+        }
+        [HttpGet("courier/{courierId}")]
+        public async Task<IActionResult> GetCourierOrders(int courierId)
+        {
+            var orders = await _service.GetCourierOrdersAsync(courierId);
+            return Ok(orders);
+        }
     }
 }

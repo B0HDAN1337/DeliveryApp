@@ -23,29 +23,23 @@ namespace Server.Repository
         {
             return await _context.Orders.FindAsync(id);
         }
-        public async Task<Order> CreateAsync(Order order)
+        public async Task CreateAsync(Order order)
         {
-            var orderExisting = await _context.Orders.FirstOrDefaultAsync(o => o.OrderNumber == order.OrderNumber);
-            
-            if (orderExisting != null)
-            {
-                throw new InvalidOperationException("this order already exist");
-            }
-
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
-
-            return orderExisting;
         }
         public async Task<Order> UpdateAsync(int id, Order order)
         {
             var existOrder = await _context.Orders.FindAsync(id);
 
-            existOrder.OrderNumber = order.OrderNumber;
+            existOrder.ClientId = order.ClientId;
+            existOrder.CourierId = order.CourierId;
+            existOrder.PickupLocation = order.PickupLocation;
+            existOrder.DropoffLocation = order.DropoffLocation;
             existOrder.DeliveryStatus = order.DeliveryStatus;
-            existOrder.OrderNumber = order.OrderNumber;
             existOrder.CreatedAt = order.CreatedAt;
             existOrder.DeliveredAt = order.DeliveredAt;
+            existOrder.SignaturePath = order.SignaturePath;
 
             await _context.SaveChangesAsync();
 

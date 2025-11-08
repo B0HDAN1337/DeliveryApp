@@ -11,7 +11,9 @@ namespace Server.Service
     {
         Task<IEnumerable<Order>> GetAllOrderAsync();
         Task<Order> GetOrderAsync(int id);
-        Task<Order> CreateOrderAsync(OrderViewModel order);
-        Task<bool> UploadOrderSignatureAsync(int orderId,  IFormFile signatureFile);
+        Task CreateOrderAsync(OrderViewModel order);
+        Task<bool> UploadOrderSignatureAsync(int orderId, IFormFile signatureFile);
+        Task<bool> AssignCourierAsync(int orderId, int courierId);
+        Task<IEnumerable<Order>> GetCourierOrdersAsync(int courierId);
     }
 }

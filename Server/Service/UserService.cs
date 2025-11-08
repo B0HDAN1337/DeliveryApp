@@ -83,7 +83,7 @@ namespace Server.Service
             {
                 new Claim(ClaimTypes.NameIdentifier, userLogin.Id.ToString()),
                 new Claim(ClaimTypes.Name, email),
-                new Claim(ClaimTypes.Role, "User")
+                new Claim(ClaimTypes.Role, userLogin.Role)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("keyGenerationTokenForUserIdentification"));

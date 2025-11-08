@@ -15,6 +15,27 @@ namespace Server.Data
         public DbSet<RouteMarkers> RouteMarker { get; set; }
         public DbSet<Order> Orders { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.ClientOrders)
+                .WithOne(o => o.Client)
+                .HasForeignKey(o => o.ClientId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.CourierOrders)
+                .WithOne(o => o.Courier)
+                .HasForeignKey(o => o.CourierId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.RoutePoints)
+                .WithOne(r => r.Order)
+                .HasForeignKey(r => r.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
     }
 }
