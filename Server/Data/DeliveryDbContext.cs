@@ -13,5 +13,8 @@ namespace Server.Data
         
         public DbSet<User> Users { get; set; }
         public DbSet<RouteMarkers> RouteMarker { get; set; }
+        public DbSet<Order> Orders { get; set; }
+
+
     }
 }

@@ -14,10 +14,12 @@ options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")
 // Repository
 builder.Services.AddScoped<IRouteRepository, RouteRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 // Services
 builder.Services.AddScoped<IRouteService, RouteService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 // Controllers
 builder.Services.AddControllers();
@@ -86,6 +88,7 @@ app.UseHttpsRedirection();
 
 app.MapControllers();
 app.UseCors("AllowAll");
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();

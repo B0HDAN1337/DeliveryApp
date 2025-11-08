@@ -21,6 +21,8 @@ migrate_working_dir/
 
 Server/node_modules/
 
+signatures/
+
 bin
 obj
 # The .vscode folder contains launch configuration and tasks you configure in
