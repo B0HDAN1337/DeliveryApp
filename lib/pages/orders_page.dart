@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
+class OrdersPage extends StatelessWidget {
+  const OrdersPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +10,7 @@ class SecondPage extends StatelessWidget {
       shadowColor: Colors.transparent,
       margin: const EdgeInsets.all(8.0),
       child: SizedBox.expand(
-        child: Center(child: Text('Second page', style: theme.textTheme.titleLarge)),
+        child: Center(child: Text('Orders page', style: theme.textTheme.titleLarge)),
       ),
     );
   }

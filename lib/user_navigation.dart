@@ -1,17 +1,16 @@
 import 'package:delivery_app/pages/account_page.dart';
 import 'package:delivery_app/pages/home_page.dart';
-import 'package:delivery_app/pages/orders_page.dart';
 import 'package:delivery_app/pages/usermain_page.dart';
 import 'package:flutter/material.dart';
 
-class Navigation extends StatefulWidget {
-  const Navigation({super.key});
+class UserNavigation extends StatefulWidget {
+  const UserNavigation({super.key});
 
   @override
-  State<Navigation> createState() => _NavigationState();
+  State<UserNavigation> createState() => _NavigationState();
 }
 
-class _NavigationState extends State<Navigation> {
+class _NavigationState extends State<UserNavigation> {
   int currentPageIndex = 0;
 
   @override
@@ -19,8 +18,7 @@ class _NavigationState extends State<Navigation> {
     final ThemeData theme = Theme.of(context);
 
     final List<Widget> pages = const [
-      HomePage(),
-      OrdersPage(),
+      UserMainPage(),
       AccountPage(),
     ];
 
@@ -35,13 +33,8 @@ class _NavigationState extends State<Navigation> {
         selectedIndex: currentPageIndex,
         destinations: const[
           NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
             icon: Badge(child: Icon(Icons.home)),
-            label: 'Orders',
+            label: 'second',
           ),
           NavigationDestination(
             icon: Badge(child: Icon(Icons.account_box)),

@@ -15,6 +15,7 @@ dependencies:
   geolocator: ^10.1.0
   shared_preferences: ^2.5.3
   signature: ^5.3.0
+  jwt_decoder: ^2.0.1
 
 dev_dependencies:
   flutter_test:

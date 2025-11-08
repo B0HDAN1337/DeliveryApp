@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AuthService {
   static const String baseUrl = 'http://0.0.0.0:8080/api/User';
@@ -24,5 +25,19 @@ class AuthService {
     } else {
       return false;
     }
+  }
+
+  Future<String?> getUserRole() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final decode = JwtDecoder.decode(token!);
+    print(decode.keys);  
+    print(decode.values);
+    final role = decode["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    if (role == null) {
+      print("Role not found in token!");
+    }
+
+    return role;
   }
 }

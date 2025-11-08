@@ -1,4 +1,6 @@
 import 'package:delivery_app/pages/login_page.dart';
+import 'package:delivery_app/service/authService.dart';
+import 'package:delivery_app/user_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'navigation.dart';
@@ -20,6 +22,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      routes: {
+        '/User': (context) => const UserNavigation(),
+        '/Courier': (context) => const Navigation(),
+      },
       home: FutureBuilder<bool>(
         future: _isLoggedIn(),
         builder: (context, snapshot) {
@@ -27,9 +33,6 @@ class MainApp extends StatelessWidget {
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
-          }
-          if (snapshot.data == true) {
-            return const Navigation();
           }
           return const LoginPage();
         },

@@ -33,13 +33,20 @@ class _LoginPageState extends State<LoginPage> {
 
 
     if (success) {
-      var pushReplacement = Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Navigation()),
-      );
+      final role = await _authService.getUserRole();
+      if (role == 'User') {
+        Navigator.pushReplacementNamed(context, '/User');
+      } else if (role == 'Courier')
+      {
+        Navigator.pushReplacementNamed(context, '/Courier');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Unknown user role')),
+        );
+      } 
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Invalid credentials')),
+        const SnackBar(content: Text('Invalid credentials')),
       );
     }
   }
