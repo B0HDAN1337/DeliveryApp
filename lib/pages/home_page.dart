@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:delivery_app/pages/signature_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -158,8 +159,8 @@ void _maybeUpdateRoute() {
 
   bool isDialogOpen = false;
 
-  void _checkProximity() async {
-  if (currentLocation == null || points.isEmpty) return;
+void _checkProximity() async {
+  if (currentLocation == null || points.isEmpty || isDialogOpen) return;
 
   final targetPoint = points[_currentTargetIndex];
 
@@ -171,11 +172,45 @@ void _maybeUpdateRoute() {
   );
 
   if (distance < 30 && !targetPoint.visited) {
-    isDialogOpen = true;
+    isDialogOpen = true; 
+
+    if (_currentTargetIndex == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => SignaturePage(
+            orderId: 1,
+            onSigned: (signature) {
+              if (signature != null) {
+                setState(() {
+                  deliveryStatus = "Pack delivered (signed)";
+                  points[_currentTargetIndex].visited = true;
+                });
+
+                // TODO: upload signature to backend
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Delivery confirmed with signature')),
+                );
+
+                if (_currentTargetIndex < points.length - 1) {
+                  _currentTargetIndex++;
+                  _fetchRoute();
+                } else {
+                  routePoints.clear();
+                }
+              }
+            },
+          ),
+        ),
+      ).then((_) {
+        isDialogOpen = false;
+      });
+      return;
+    }
+
     String actionText = '';
     if (_currentTargetIndex == 0) actionText = 'Confirm vehicle pickup?';
     else if (_currentTargetIndex == 1) actionText = 'Confirm parcel collected?';
-    else if (_currentTargetIndex == 2) actionText = 'Confirm parcel delivered?';
 
     showDialog(
       context: context,
@@ -194,6 +229,7 @@ void _maybeUpdateRoute() {
             onPressed: () {
               Navigator.pop(context);
               _confirmStep();
+              isDialogOpen = false;
             },
             child: const Text('Confirm'),
           ),
@@ -208,11 +244,9 @@ void _confirmStep() {
     points[_currentTargetIndex].visited = true;
 
     if (_currentTargetIndex == 0) {
-      deliveryStatus = 'Vehicle accepted ';
+      deliveryStatus = 'Vehicle accepted';
     } else if (_currentTargetIndex == 1) {
-      deliveryStatus = 'Pack collected ';
-    } else if (_currentTargetIndex == 2) {
-      deliveryStatus = 'Pack delivered';
+      deliveryStatus = 'Pack collected';
     }
 
     ScaffoldMessenger.of(context).showSnackBar(

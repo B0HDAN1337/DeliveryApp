@@ -11,7 +11,7 @@ class Point {
       lat: json['lat'],
       lon: json['lon'],
       name: json['name'] ?? '',
-      visited: json['visited'] ?? false,
+      visited: json['visited'] ?? false
     );
   }
 
