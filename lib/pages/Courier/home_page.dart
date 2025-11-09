@@ -174,7 +174,7 @@ void _checkProximity() async {
   if (distance < 30 && !targetPoint.visited) {
     isDialogOpen = true; 
 
-    if (_currentTargetIndex == 2) {
+    if (_currentTargetIndex == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -209,8 +209,7 @@ void _checkProximity() async {
     }
 
     String actionText = '';
-    if (_currentTargetIndex == 0) actionText = 'Confirm vehicle pickup?';
-    else if (_currentTargetIndex == 1) actionText = 'Confirm parcel collected?';
+    if (_currentTargetIndex == 0) actionText = 'Confirm parcel collected?';
 
     showDialog(
       context: context,
@@ -244,8 +243,6 @@ void _confirmStep() {
     points[_currentTargetIndex].visited = true;
 
     if (_currentTargetIndex == 0) {
-      deliveryStatus = 'Vehicle accepted';
-    } else if (_currentTargetIndex == 1) {
       deliveryStatus = 'Pack collected';
     }
 

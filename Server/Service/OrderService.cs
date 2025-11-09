@@ -80,7 +80,7 @@ namespace Server.Service
             if (order == null) return false;
 
             var allOrders = await _repository.GetAllAsync();
-            var activeOrders = allOrders.FirstOrDefault(o => o.CourierId == courierId && o.DeliveryStatus != "accepted" && o.DeliveryStatus != "delivered");
+            var activeOrders = allOrders.FirstOrDefault(o => o.CourierId == courierId && o.DeliveryStatus == "accepted");
             if (activeOrders != null)
             {
                 throw new Exception("Courier already has order");

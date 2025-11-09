@@ -27,7 +27,7 @@ namespace Server.Repository
         }
         public async Task<IEnumerable<RouteMarkers>> GetById(int id)
         {
-            return await _context.RouteMarker.Where(r => r.CourierId == id).ToListAsync();
+            return await _context.RouteMarker.Where(r => r.CourierId == id && r.DeliveryStatus != "delivered").ToListAsync();
         }   
     }
 }

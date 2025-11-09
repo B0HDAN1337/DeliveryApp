@@ -32,7 +32,7 @@ namespace Server.Controller
             return Ok();
         }
 
-        [HttpGet("courierId/{courierId}")]
+        [HttpGet("{courierId}")]
         public async Task<IActionResult> GetByCourierId(int courierId)
         {
             var routes = await _service.GetByIdAsync(courierId);

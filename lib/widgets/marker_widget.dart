@@ -12,15 +12,11 @@ class MarkerWidget {
       IconData icon;
       Color color;
 
-     if (index == 0) {
-        // Car
-        icon = Icons.car_rental_rounded;
-        color = point.visited ? Colors.grey : Colors.blue;
-      } else if (index == 1) {
+      if (index == 0) {
         // Collect pack
         icon = Icons.local_shipping;
         color = point.visited ? Colors.grey : Colors.orange;
-      } else if (index == 2) {
+      } else if (index == 1) {
         // Delivery pack
         icon = Icons.flag;
         color = point.visited ? Colors.grey : Colors.green;
