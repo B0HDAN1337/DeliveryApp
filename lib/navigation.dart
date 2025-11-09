@@ -1,4 +1,5 @@
 import 'package:delivery_app/pages/account_page.dart';
+import 'package:delivery_app/pages/availableOrders_page.dart';
 import 'package:delivery_app/pages/home_page.dart';
 import 'package:delivery_app/pages/orders_page.dart';
 import 'package:delivery_app/pages/usermain_page.dart';
@@ -21,6 +22,7 @@ class _NavigationState extends State<Navigation> {
     final List<Widget> pages = const [
       HomePage(),
       OrdersPage(),
+      AvailableOrdersPage(),
       AccountPage(),
     ];
 
@@ -41,7 +43,11 @@ class _NavigationState extends State<Navigation> {
           ),
           NavigationDestination(
             icon: Badge(child: Icon(Icons.home)),
-            label: 'Orders',
+            label: 'My Orders',
+          ),
+          NavigationDestination(
+            icon: Badge(child: Icon(Icons.abc_outlined)), 
+            label: 'Orders'
           ),
           NavigationDestination(
             icon: Badge(child: Icon(Icons.account_box)),
