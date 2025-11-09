@@ -57,7 +57,8 @@ namespace Server.Service
             if (!Directory.Exists(uploadDir))
                 Directory.CreateDirectory(uploadDir);
 
-            string fileName = $"signature_{orderId}.png";
+            string uniqueId = Guid.NewGuid().ToString();
+            string fileName = $"signature_{orderId}_{uniqueId}.png";
             string filePath = Path.Combine(uploadDir, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
