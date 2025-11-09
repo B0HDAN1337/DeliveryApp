@@ -45,9 +45,7 @@ class UserOrderService {
       body: jsonEncode({
         'clientId': id,
         'pickupLocation': pickup,
-        'dropoffLocation': dropoff,
-        'deliveryStatus': "pending",
-        'createdAt': DateTime.now().toIso8601String()
+        'dropoffLocation': dropoff
       }),
     );
 

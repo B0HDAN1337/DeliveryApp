@@ -33,8 +33,6 @@ namespace Server.Service
                 ClientId = orderViewModel.ClientId,
                 PickupLocation = orderViewModel.PickupLocation,
                 DropoffLocation = orderViewModel.DropoffLocation,
-                DeliveryStatus = orderViewModel.DeliveryStatus,
-                CreatedAt = DateTime.UtcNow
             };
             
             await _repository.CreateAsync(order);
