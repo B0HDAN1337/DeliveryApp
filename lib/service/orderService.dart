@@ -28,7 +28,7 @@ class OrderService {
   }
 }
 
-Future<String?> getUserId() async {
+Future<String> getUserId() async {
     final prefs = await SharedPreferences.getInstance(); 
     final token = prefs.getString('token');
     final decode = JwtDecoder.decode(token!);

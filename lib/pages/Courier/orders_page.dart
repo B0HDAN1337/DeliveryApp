@@ -51,21 +51,6 @@ class _CourierOrdersPageState extends State<OrdersPage> {
   }
 }
 
-
-  Future<void> _updateStatus(int orderId, String status) async {
-    try {
-      await _service.updateStatus(orderId, status);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Status updated')),
-      );
-      _fetchOrders();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to update status')),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,30 +71,6 @@ class _CourierOrdersPageState extends State<OrdersPage> {
                         'Pickup: ${order.pickupLocation}\n'
                         'Dropoff: ${order.dropoffLocation}\n'
                         'Status: ${order.deliveryStatus}',
-                      ),
-                      trailing: PopupMenuButton<String>(
-                        onSelected: (value) {
-                          if (value == 'accept') {
-                            _acceptOrder(order.id);
-                          } else {
-                            _updateStatus(order.id, value);
-                          }
-                        },
-                        itemBuilder: (context) => [
-                          if (order.deliveryStatus == 'pending')
-                            const PopupMenuItem(
-                              value: 'accept',
-                              child: Text('Accept'),
-                            ),
-                          const PopupMenuItem(
-                            value: 'in_progress',
-                            child: Text('In Progress'),
-                          ),
-                          const PopupMenuItem(
-                            value: 'delivered',
-                            child: Text('Delivered'),
-                          ),
-                        ],
                       ),
                     ),
                   );

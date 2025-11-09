@@ -52,20 +52,4 @@ class CourierOrderService {
     }
   }
 
-  Future<void> updateStatus(int orderId, String status) async {
-    final prefs = await SharedPreferences.getInstance(); 
-    final token = prefs.getString('token');
-    final response = await http.put(
-      Uri.parse('$baseUrl/$orderId/status'),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode({'status': status}),
-    );
-
-    if (response.statusCode != 200) {
-      throw Exception('Failed to update status');
-    }
-  }
 }

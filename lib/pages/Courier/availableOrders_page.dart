@@ -22,28 +22,28 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
     _ordersFuture = _orderService.fetchAvailableOrders();
   }
 
-  // Future<void> _acceptOrder(Order order) async {
-  //   setState(() {
-  //     _loading = true;
-  //   });
+  Future<void> _acceptOrder(Order order) async {
+    setState(() {
+      _loading = true;
+    });
 
-  //   final courierId = await _orderService.getUserId(); 
-  //   final success = await _orderService.acceptOrder(order.id, courierId);
+    final courierId = await _orderService.getUserId(); 
+    final success = await _orderService.acceptOrder(order.id, int.parse(courierId));
 
-  //   setState(() {
-  //     _loading = false;
-  //     if (success) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text('Order #${order.id} accepted!')),
-  //       );
-  //       _ordersFuture = _orderService.fetchAvailableOrders();
-  //     } else {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(content: Text('Failed to accept order')),
-  //       );
-  //     }
-  //   });
-  // }
+    setState(() {
+      _loading = false;
+      if (success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Order #${order.id} accepted!')),
+        );
+        _ordersFuture = _orderService.fetchAvailableOrders();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to accept order')),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +75,7 @@ class _AvailableOrdersPageState extends State<AvailableOrdersPage> {
                   trailing: _loading
                       ? const CircularProgressIndicator()
                       : ElevatedButton(
-                          onPressed: () => (order),
+                          onPressed: () => _acceptOrder(order),
                           child: const Text('Accept'),
                         ),
                 ),
