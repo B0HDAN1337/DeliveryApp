@@ -45,5 +45,12 @@ namespace Server.Repository
 
             return existOrder;
         }
+
+        public async Task Delete(int orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            _context.Remove(order);
+            await _context.SaveChangesAsync();
+        }
     }
 }

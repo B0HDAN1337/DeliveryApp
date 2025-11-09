@@ -12,5 +12,6 @@ namespace Server.Repository
         Task<Order?> GetByIdAsync(int id);
         Task CreateAsync(Order order);
         Task<Order> UpdateAsync(int id, Order order);
+        Task Delete(int orderId);
     }
 }

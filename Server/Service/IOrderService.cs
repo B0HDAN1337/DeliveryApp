@@ -15,5 +15,7 @@ namespace Server.Service
         Task<bool> UploadOrderSignatureAsync(int orderId, IFormFile signatureFile);
         Task<bool> AssignCourierAsync(int orderId, int courierId);
         Task<IEnumerable<Order>> GetCourierOrdersAsync(int courierId);
+        Task<IEnumerable<Order>> GetClientOrdersAsync(int clientId);
+        Task DeleteAsync(int orderId);
     }
 }

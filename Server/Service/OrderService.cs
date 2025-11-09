@@ -82,5 +82,15 @@ namespace Server.Service
             return allOrders.Where(o => o.CourierId == courierId);
         }
 
+        public async Task<IEnumerable<Order>> GetClientOrdersAsync(int clientId)
+        {
+            var allOrders = await _repository.GetAllAsync();
+            return allOrders.Where(o => o.ClientId == clientId);
+        }
+
+        public async Task DeleteAsync(int orderId)
+        {
+            await _repository.Delete(orderId);
+        }
     }
 }

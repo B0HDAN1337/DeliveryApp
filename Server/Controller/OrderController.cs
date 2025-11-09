@@ -86,5 +86,17 @@ namespace Server.Controller
             var orders = await _service.GetCourierOrdersAsync(courierId);
             return Ok(orders);
         }
+        [HttpGet("client/{userId}")]
+        public async Task<IActionResult> GetUserOrders(int userId)
+        {
+            var orders = await _service.GetClientOrdersAsync(userId);
+            return Ok(orders);
+        }
+        [HttpDelete("delete/{orderId}")]
+        public async Task<IActionResult> DeleteAsync(int orderId)
+        {
+            await _service.DeleteAsync(orderId);
+            return Ok();
+        }
     }
 }
