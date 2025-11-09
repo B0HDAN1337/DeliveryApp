@@ -13,10 +13,14 @@ namespace Server.Service
     {
         private readonly IOrderRepository _repository;
         private readonly IWebHostEnvironment _env;
-        public OrderService(IOrderRepository repository,IWebHostEnvironment env)
+        private readonly IGeoService _geoService;
+        private readonly IRouteService _routeService;
+        public OrderService(IOrderRepository repository,IWebHostEnvironment env, IGeoService geoService, IRouteService routeService)
         {
             _repository = repository;
             _env = env;
+            _geoService = geoService;
+            _routeService = routeService;
         }
         public async Task<IEnumerable<Order>> GetAllOrderAsync()
         {
@@ -28,11 +32,18 @@ namespace Server.Service
         }
         public async Task CreateOrderAsync(OrderViewModel orderViewModel)
         {
+            var pickupCoords = await _geoService.GeocodeAsync(orderViewModel.PickupLocation);
+            var dropoffCoords = await _geoService.GeocodeAsync(orderViewModel.DropoffLocation);
+
             var order = new Order
             {
                 ClientId = orderViewModel.ClientId,
                 PickupLocation = orderViewModel.PickupLocation,
                 DropoffLocation = orderViewModel.DropoffLocation,
+                PickupLat = pickupCoords.Lat,
+                PickupLon = pickupCoords.Lon,
+                DropoffLat = dropoffCoords.Lat,
+                DropoffLon = dropoffCoords.Lon
             };
             
             await _repository.CreateAsync(order);
@@ -68,9 +79,37 @@ namespace Server.Service
             var order = await _repository.GetByIdAsync(orderId);
             if (order == null) return false;
 
+            var allOrders = await _repository.GetAllAsync();
+            var activeOrders = allOrders.FirstOrDefault(o => o.CourierId == courierId && o.DeliveryStatus != "accepted" && o.DeliveryStatus != "delivered");
+            if (activeOrders != null)
+            {
+                throw new Exception("Courier already has order");
+            }
+
             order.CourierId = courierId;
             order.DeliveryStatus = "accepted";
             await _repository.UpdateAsync(orderId, order);
+
+            var routes = new List<RouteMarkerViewModel>
+            {
+                new RouteMarkerViewModel
+                {
+                    OrderId = order.Id,
+                    CourierId = courierId,
+                    lat = order.PickupLat,
+                    lon = order.PickupLon,
+                    Sequence = 0
+                },
+                new RouteMarkerViewModel
+                {
+                    OrderId = order.Id,
+                    CourierId = courierId,
+                    lat = order.DropoffLat,
+                    lon = order.DropoffLon,
+                    Sequence = 1
+                },
+            };
+            await _routeService.CreateAsync(routes);
             return true;
         }
 

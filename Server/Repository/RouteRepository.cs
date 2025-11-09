@@ -20,5 +20,14 @@ namespace Server.Repository
         {
             return await _context.RouteMarker.ToListAsync();
         }
+        public async Task Create(IEnumerable<RouteMarkers> marker)
+        {
+            await _context.RouteMarker.AddRangeAsync(marker);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<RouteMarkers>> GetById(int id)
+        {
+            return await _context.RouteMarker.Where(r => r.CourierId == id).ToListAsync();
+        }   
     }
 }

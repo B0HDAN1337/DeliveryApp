@@ -16,7 +16,7 @@ namespace Server.models
         [Required]
         public string Password { get; set; }
 
-        public ICollection<Order> ClientOrders { get; set; } = new List<Order>();
-        public ICollection<Order> CourierOrders { get; set; } = new List<Order>();
+        public ICollection<Order> ClientOrders { get; set; } 
+        public ICollection<Order> CourierOrders { get; set; }
     }
 }

@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Server.models
+namespace Server.ViewModel
 {
-    public class RouteMarkers
+    public class RouteMarkerViewModel
     {
-        public int id { get; set; }
         public int OrderId { get; set; }
-        public Order Order { get; set; } = null!;
         public int CourierId { get; set; }
-        public User Courier { get; set; } = null!;
         public double lat { get; set; }
         public double lon { get; set; }
         public int Sequence { get; set; }

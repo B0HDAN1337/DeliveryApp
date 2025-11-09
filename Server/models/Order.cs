@@ -10,6 +10,10 @@ namespace Server.models
         public int Id { get; set; }
         public string? PickupLocation { get; set; } = null!;
         public string? DropoffLocation { get; set; } = null!;
+        public double PickupLat { get; set; }
+        public double PickupLon { get; set; }
+        public double DropoffLat { get; set; }
+        public double DropoffLon { get; set; }
         public string? DeliveryStatus { get; set; } = "pending";
         public string? SignaturePath { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -20,6 +24,6 @@ namespace Server.models
         public User? Courier { get; set; }
         public int? CourierId { get; set; } 
 
-        public ICollection<RouteMarkers>? RoutePoints { get; set; } = new List<RouteMarkers>();
+        public ICollection<RouteMarkers>? RoutePoints { get; set; }
     }
 }

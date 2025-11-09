@@ -36,6 +36,12 @@ namespace Server.Data
                 .WithOne(r => r.Order)
                 .HasForeignKey(r => r.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RouteMarkers>()
+                .HasOne(r => r.Courier)
+                .WithMany()
+                .HasForeignKey(r => r.CourierId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
