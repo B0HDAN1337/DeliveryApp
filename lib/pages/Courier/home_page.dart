@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:delivery_app/pages/signature_page.dart';
+import 'package:delivery_app/pages/Courier/signature_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import '../models/point.dart';
+import '../../models/point.dart';
 import 'package:http/http.dart' as http;
-import '../service/routeService.dart';
-import '../widgets/marker_widget.dart';
-import '../widgets/map_widget.dart';
+import '../../service/routeService.dart';
+import '../../widgets/marker_widget.dart';
+import '../../widgets/map_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

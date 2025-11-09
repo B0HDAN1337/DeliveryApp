@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../models/order.dart';
-import '../service/orderService.dart';
+import '../../models/order.dart';
+import '../../service/orderService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../service/authService.dart';
+import '../../service/authService.dart';
 
 class AvailableOrdersPage extends StatefulWidget {
   const AvailableOrdersPage({super.key});

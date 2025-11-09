@@ -1,8 +1,8 @@
 import 'package:delivery_app/pages/account_page.dart';
-import 'package:delivery_app/pages/availableOrders_page.dart';
-import 'package:delivery_app/pages/home_page.dart';
-import 'package:delivery_app/pages/orders_page.dart';
-import 'package:delivery_app/pages/usermain_page.dart';
+import 'package:delivery_app/pages/Courier/availableOrders_page.dart';
+import 'package:delivery_app/pages/Courier/home_page.dart';
+import 'package:delivery_app/pages/Courier/orders_page.dart';
+import 'package:delivery_app/pages/User/usermain_page.dart';
 import 'package:flutter/material.dart';
 
 class Navigation extends StatefulWidget {
