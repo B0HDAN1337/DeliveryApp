@@ -1,3 +1,4 @@
+import 'package:delivery_app/pages/User/userOrder_page.dart';
 import 'package:delivery_app/pages/account_page.dart';
 import 'package:delivery_app/pages/Courier/home_page.dart';
 import 'package:delivery_app/pages/User/usermain_page.dart';
@@ -19,6 +20,7 @@ class _NavigationState extends State<UserNavigation> {
 
     final List<Widget> pages = const [
       UserMainPage(),
+      UserOrderPage(),
       AccountPage(),
     ];
 
@@ -36,6 +38,10 @@ class _NavigationState extends State<UserNavigation> {
             icon: Badge(child: Icon(Icons.home)),
             label: 'second',
           ),
+          NavigationDestination(
+            icon: Badge(child: Icon(Icons.shop),), 
+            label: 'Order'
+            ),
           NavigationDestination(
             icon: Badge(child: Icon(Icons.account_box)),
             label: 'Account',

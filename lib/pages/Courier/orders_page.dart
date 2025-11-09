@@ -1,7 +1,7 @@
-import 'package:delivery_app/service/courierOrderService.dart';
+import 'package:delivery_app/service/Courier/courierOrderService.dart';
 import 'package:flutter/material.dart';
 import '../../models/order.dart';
-import '../../service/courierOrderService.dart';
+import '../../service/Courier/courierOrderService.dart';
 
 class OrdersPage extends StatefulWidget {
   const OrdersPage({super.key});

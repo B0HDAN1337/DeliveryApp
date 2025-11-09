@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import '../models/order.dart';
+import '../../models/order.dart';
 
 class CourierOrderService {
   final String baseUrl = 'http://0.0.0.0:8080/api/Order';
