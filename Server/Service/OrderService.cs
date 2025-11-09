@@ -71,6 +71,8 @@ namespace Server.Service
 
             await _repository.UpdateAsync(orderId, order);
 
+            await _routeService.UpdateByOrderId(orderId, "delivered");;
+
             return true;
         }
         
@@ -98,6 +100,7 @@ namespace Server.Service
                     CourierId = courierId,
                     lat = order.PickupLat,
                     lon = order.PickupLon,
+                    DeliveryStatus = order.DeliveryStatus,
                     Sequence = 0
                 },
                 new RouteMarkerViewModel

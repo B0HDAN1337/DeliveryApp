@@ -9,6 +9,7 @@ namespace Server.ViewModel
     {
         public int OrderId { get; set; }
         public int CourierId { get; set; }
+        public string? DeliveryStatus { get; set; }
         public double lat { get; set; }
         public double lon { get; set; }
         public int Sequence { get; set; }

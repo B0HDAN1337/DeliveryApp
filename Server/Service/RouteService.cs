@@ -40,5 +40,9 @@ namespace Server.Service
         {
             return await _repository.GetById(id);
         }
+        public async Task<IEnumerable<RouteMarkers>> UpdateByOrderId(int id, string status)
+        {
+            return await _repository.UpdateByOrderId(id, status);
+        }
     }
 }

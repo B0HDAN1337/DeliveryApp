@@ -12,5 +12,6 @@ namespace Server.Repository
         Task<IEnumerable<RouteMarkers>> GetAllAsync();
         Task Create(IEnumerable<RouteMarkers> marker);
         Task<IEnumerable<RouteMarkers>> GetById(int id);
+        Task<IEnumerable<RouteMarkers>> UpdateByOrderId(int id, string marker);
     }
 }

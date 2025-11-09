@@ -12,5 +12,6 @@ namespace Server.Service
         Task<IEnumerable<RouteMarkers>> GetRouteAllAsync();
         Task CreateAsync(IEnumerable<RouteMarkerViewModel> viewModel);
         Task<IEnumerable<RouteMarkers>> GetByIdAsync(int id);   
+        Task<IEnumerable<RouteMarkers>> UpdateByOrderId(int id, string status);
     }
 }

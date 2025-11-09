@@ -28,6 +28,19 @@ namespace Server.Repository
         public async Task<IEnumerable<RouteMarkers>> GetById(int id)
         {
             return await _context.RouteMarker.Where(r => r.CourierId == id && r.DeliveryStatus != "delivered").ToListAsync();
-        }   
+        }
+        public async Task<IEnumerable<RouteMarkers>> UpdateByOrderId(int id, string status)
+        {
+            var order = await _context.RouteMarker.Where(r => r.OrderId == id).ToListAsync();
+
+            foreach (var orders in order)
+            {
+                orders.DeliveryStatus = status;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return order;
+        }
     }
 }

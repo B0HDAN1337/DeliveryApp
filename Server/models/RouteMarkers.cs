@@ -12,6 +12,7 @@ namespace Server.models
         public Order Order { get; set; } = null!;
         public int CourierId { get; set; }
         public User Courier { get; set; } = null!;
+        public string? DeliveryStatus { get; set; }
         public double lat { get; set; }
         public double lon { get; set; }
         public int Sequence { get; set; }
