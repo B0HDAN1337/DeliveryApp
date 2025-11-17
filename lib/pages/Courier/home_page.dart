@@ -179,7 +179,7 @@ void _checkProximity() async {
         context,
         MaterialPageRoute(
           builder: (context) => SignaturePage(
-            orderId: 1,
+            orderId: points[_currentTargetIndex].orderId,
             onSigned: (signature) {
               if (signature != null) {
                 setState(() {
