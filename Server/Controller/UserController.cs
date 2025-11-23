@@ -19,6 +19,7 @@ namespace Server.Controller
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

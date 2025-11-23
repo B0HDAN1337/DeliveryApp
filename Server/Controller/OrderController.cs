@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.models;
 using Server.Service;
@@ -19,6 +20,7 @@ namespace Server.Controller
             _service = service;
         }
 
+        [Authorize(Roles = "Courier")]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -26,6 +28,7 @@ namespace Server.Controller
             return Ok(orders);
         }
 
+        [Authorize(Roles ="Courier")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -38,6 +41,7 @@ namespace Server.Controller
             return Ok(order);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] OrderViewModel order)
         {
@@ -52,6 +56,7 @@ namespace Server.Controller
             }
         }
 
+        [Authorize(Roles = "Courier")]
         [HttpPost("{id}/signature")]
         public async Task<IActionResult> UploadSignature(int id, IFormFile signature)
         {
@@ -69,6 +74,7 @@ namespace Server.Controller
             return Ok(new { message = "Signature uploaded successfully" });
         }
 
+        [Authorize]
         [HttpPost("{id}/assign")]
         public async Task<IActionResult> AssignCourier(int id, int courierId)
         {
@@ -80,18 +86,24 @@ namespace Server.Controller
 
             return Ok(new { message = "Courier assigned" });
         }
+
+        [Authorize(Roles = "Courier")]
         [HttpGet("courier/{courierId}")]
         public async Task<IActionResult> GetCourierOrders(int courierId)
         {
             var orders = await _service.GetCourierOrdersAsync(courierId);
             return Ok(orders);
         }
+
+        [Authorize(Roles = "User")]
         [HttpGet("client/{userId}")]
         public async Task<IActionResult> GetUserOrders(int userId)
         {
             var orders = await _service.GetClientOrdersAsync(userId);
             return Ok(orders);
         }
+        
+        [Authorize]
         [HttpDelete("delete/{orderId}")]
         public async Task<IActionResult> DeleteAsync(int orderId)
         {
